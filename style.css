@@ -1,0 +1,8 @@
+html {
+  background-color: green;
+}
+
+.car {
+  position: relative;
+  height: 120px;
+}

@@ -11,6 +11,10 @@ var game = new Driver();
 var keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'];
 var rotateclass = ['car normal', 'car down', 'car left', 'car up'];
 
+var counter = 0;
+
+var int;
+
 Driver.prototype.turnCar = function (event) {
   for (var i = 0; keys.length > i; i++) {
     if (event.key === keys[i]) {
@@ -25,18 +29,26 @@ Driver.prototype.renderGame = function () {
   body.appendChild(game.car);
 };
 
-Driver.prototype.startCar = function (event) {
+Driver.prototype.startCar = function () {
   if (event.code === 'Space') {
-    setInterval(function () {
+    if (counter % 2 === 0 || counter === 0) {
+      counter++;
+      int = setInterval(function () {
+        document.body.innerHTML = '';
+        var left = parseInt(game.x || 10);
+        game.x = (left + 3) + 'px';
+        game.renderGame();
+      }, 16);
+    } else {
       document.body.innerHTML = '';
-      var left = parseInt(game.x || 10);
-      game.x = (left + 3) + 'px';
+      clearInterval(int);
       game.renderGame();
-    }, 16);
+      counter++;
+    }
   }
 };
 
-document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', function () {
   game.turnCar(event);
   game.startCar(event);
 });
